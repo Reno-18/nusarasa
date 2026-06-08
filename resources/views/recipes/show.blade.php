@@ -28,9 +28,13 @@
 
                 <div class="flex items-center justify-between mb-8">
                     <div class="flex items-center gap-4">
-                        <div class="w-14 h-14 bg-nusarasa-purple rounded-full border-2 border-nusarasa-dark flex items-center justify-center font-black text-xl">
-                            {{ substr($recipe->user->name, 0, 1) }}
-                        </div>
+                        @if($recipe->user->avatar_url)
+                            <img src="{{ $recipe->user->avatar_url }}" alt="{{ $recipe->user->name }}" class="w-14 h-14 rounded-full border-2 border-nusarasa-dark object-cover">
+                        @else
+                            <div class="w-14 h-14 bg-nusarasa-purple rounded-full border-2 border-nusarasa-dark flex items-center justify-center font-black text-xl">
+                                {{ substr($recipe->user->name, 0, 1) }}
+                            </div>
+                        @endif
                         <div>
                             <p class="text-xs font-black uppercase opacity-60">Dibuat oleh</p>
                             <p class="font-bold text-lg leading-tight">{{ $recipe->user->name }}</p>
@@ -104,6 +108,35 @@
                     </div>
                 </div>
 
+                @if($recipe->nutrition)
+                    <!-- Nutrition Info Card -->
+                    <div class="bg-green-100 border-2 border-nusarasa-dark rounded-4xl p-8 mb-8" data-aos="fade-up">
+                        <h2 class="text-2xl font-black font-display uppercase tracking-tight mb-6 text-nusarasa-dark">Kandungan Nutrisi (Per Porsi)</h2>
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="p-3 bg-white border-2 border-nusarasa-dark rounded-2xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                                <p class="text-xs font-black uppercase text-nusarasa-dark/40">Kalori</p>
+                                <p class="text-lg font-black text-nusarasa-dark">{{ $recipe->nutrition['calories'] ?? 0 }} kkal</p>
+                            </div>
+                            <div class="p-3 bg-white border-2 border-nusarasa-dark rounded-2xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                                <p class="text-xs font-black uppercase text-nusarasa-dark/40">Protein</p>
+                                <p class="text-lg font-black text-nusarasa-dark">{{ $recipe->nutrition['protein'] ?? 0 }} g</p>
+                            </div>
+                            <div class="p-3 bg-white border-2 border-nusarasa-dark rounded-2xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                                <p class="text-xs font-black uppercase text-nusarasa-dark/40">Karbohidrat</p>
+                                <p class="text-lg font-black text-nusarasa-dark">{{ $recipe->nutrition['carbs'] ?? 0 }} g</p>
+                            </div>
+                            <div class="p-3 bg-white border-2 border-nusarasa-dark rounded-2xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                                <p class="text-xs font-black uppercase text-nusarasa-dark/40">Lemak</p>
+                                <p class="text-lg font-black text-nusarasa-dark">{{ $recipe->nutrition['fat'] ?? 0 }} g</p>
+                            </div>
+                            <div class="col-span-2 p-3 bg-white border-2 border-nusarasa-dark rounded-2xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                                <p class="text-xs font-black uppercase text-nusarasa-dark/40">Serat</p>
+                                <p class="text-lg font-black text-nusarasa-dark">{{ $recipe->nutrition['fiber'] ?? 0 }} g</p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 <!-- Meal Plan Form -->
                 @auth
                     <div class="bg-nusarasa-purple border-2 border-nusarasa-dark rounded-4xl p-8 mb-8">
@@ -172,9 +205,13 @@
                 <div class="md:w-2/3 w-full space-y-6">
                     @forelse($recipe->ratings as $rating)
                         <div class="bg-white border-2 border-nusarasa-dark rounded-4xl p-8 flex flex-col md:flex-row gap-8">
-                            <div class="w-16 h-16 bg-nusarasa-yellow rounded-full border-2 border-nusarasa-dark flex items-center justify-center font-black text-xl shrink-0">
-                                {{ substr($rating->user->name, 0, 1) }}
-                            </div>
+                            @if($rating->user->avatar_url)
+                                <img src="{{ $rating->user->avatar_url }}" alt="{{ $rating->user->name }}" class="w-16 h-16 rounded-full border-2 border-nusarasa-dark object-cover shrink-0">
+                            @else
+                                <div class="w-16 h-16 bg-nusarasa-yellow rounded-full border-2 border-nusarasa-dark flex items-center justify-center font-black text-xl shrink-0">
+                                    {{ substr($rating->user->name, 0, 1) }}
+                                </div>
+                            @endif
                             <div class="flex-1">
                                 <div class="flex items-center justify-between mb-4">
                                     <div>

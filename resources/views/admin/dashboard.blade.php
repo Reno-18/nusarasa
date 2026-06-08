@@ -1,10 +1,18 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <div class="flex items-center justify-between mb-12" data-aos="fade-down">
-            <h1 class="text-5xl font-black font-display uppercase tracking-tighter text-nusarasa-dark">Dashboard<br>Kepala Chef</h1>
-            <div class="text-right">
-                <p class="text-xs font-black uppercase opacity-40 tracking-widest">Status Sistem</p>
-                <p class="font-bold text-green-500 uppercase tracking-widest text-sm">Aktif & Berjalan</p>
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-12" data-aos="fade-down">
+            <div>
+                <h1 class="text-5xl font-black font-display uppercase tracking-tighter text-nusarasa-dark">Dashboard<br>Kepala Chef</h1>
+            </div>
+            <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                <div class="text-left md:text-right">
+                    <p class="text-xs font-black uppercase opacity-40 tracking-widest">Status Sistem</p>
+                    <p class="font-bold text-green-500 uppercase tracking-widest text-sm">Aktif & Berjalan</p>
+                </div>
+                <a href="{{ route('chef.recipes.create') }}" 
+                   class="px-8 py-4 bg-nusarasa-dark text-white rounded-full font-black text-xs uppercase tracking-widest hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] whitespace-nowrap">
+                    + Tambah Resep
+                </a>
             </div>
         </div>
 

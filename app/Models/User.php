@@ -23,8 +23,11 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'avatar',
+        'active_badge_id',
         'password',
         'role',
+        'show_on_leaderboard',
     ];
 
     /**
@@ -47,7 +50,23 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'show_on_leaderboard' => 'boolean',
         ];
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            $user->points()->create([
+                'points' => 0,
+                'level' => 'Koki Pemula'
+            ]);
+            $user->streak()->create([
+                'current_streak' => 0,
+                'longest_streak' => 0,
+                'last_planned_week' => null
+            ]);
+        });
     }
 
     public function recipes(): HasMany
@@ -68,6 +87,46 @@ class User extends Authenticatable
     public function ratings(): HasMany
     {
         return $this->hasMany(Rating::class);
+    }
+
+    public function recipeViews(): HasMany
+    {
+        return $this->hasMany(RecipeView::class);
+    }
+
+    public function mealPlanTemplates(): HasMany
+    {
+        return $this->hasMany(MealPlanTemplate::class, 'chef_id');
+    }
+
+    public function points(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(UserPoints::class);
+    }
+
+    public function badges(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Badge::class, 'user_badges')
+                    ->withPivot('unlocked_at')
+                    ->withTimestamps();
+    }
+
+    public function streak(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(MealPlanStreak::class);
+    }
+
+    public function activeBadge(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Badge::class, 'active_badge_id');
+    }
+
+    public function getAvatarUrlAttribute(): ?string
+    {
+        if ($this->avatar) {
+            return asset('storage/' . $this->avatar);
+        }
+        return null;
     }
 
     public function isAdmin(): bool

@@ -97,4 +97,19 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'User role updated successfully');
     }
+
+    public function toggleLeaderboard($id)
+    {
+        $user = User::findOrFail($id);
+        $user->update(['show_on_leaderboard' => !$user->show_on_leaderboard]);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'message' => 'Status leaderboard berhasil diperbarui!',
+                'show_on_leaderboard' => $user->show_on_leaderboard
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Status leaderboard user berhasil diperbarui');
+    }
 }

@@ -16,8 +16,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $user = $request->user();
+        $unlockedBadges = $user->badges;
+
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $user,
+            'unlockedBadges' => $unlockedBadges,
         ]);
     }
 
@@ -26,13 +30,39 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $data = $request->validated();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($request->hasFile('avatar')) {
+            // Delete old avatar if exists
+            if ($user->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->avatar)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->avatar);
+            }
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $data['avatar'] = $path;
         }
 
-        $request->user()->save();
+        // Handle active badge selection
+        if (array_key_exists('active_badge_id', $data)) {
+            if (empty($data['active_badge_id'])) {
+                // User wants no badge
+                $data['active_badge_id'] = null;
+            } else {
+                // Verify the user actually owns the badge
+                $ownsBadge = $user->badges()->where('badges.id', $data['active_badge_id'])->exists();
+                if (!$ownsBadge) {
+                    unset($data['active_badge_id']); // Ignore invalid badge selection
+                }
+            }
+        }
+
+        $user->fill($data);
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
@@ -56,5 +86,16 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    /**
+     * Toggle the user's leaderboard visibility status.
+     */
+    public function toggleLeaderboard(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+        $user->update(['show_on_leaderboard' => !$user->show_on_leaderboard]);
+
+        return Redirect::route('profile.edit')->with('success', 'Status penampilan di leaderboard berhasil diubah!');
     }
 }

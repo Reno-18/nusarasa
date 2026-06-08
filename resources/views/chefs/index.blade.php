@@ -19,9 +19,13 @@
                     @endif
 
                     <!-- Chef Avatar -->
-                    <div class="w-32 h-32 bg-{{ $chef->role === 'admin' ? 'nusarasa-pink' : 'nusarasa-purple' }} border-4 border-nusarasa-dark rounded-full flex items-center justify-center font-black text-5xl font-display text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6 mt-4">
-                        {{ substr($chef->name, 0, 1) }}
-                    </div>
+                    @if($chef->avatar_url)
+                        <img src="{{ $chef->avatar_url }}" alt="{{ $chef->name }}" class="w-32 h-32 border-4 border-nusarasa-dark rounded-full object-cover shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6 mt-4">
+                    @else
+                        <div class="w-32 h-32 bg-{{ $chef->role === 'admin' ? 'nusarasa-pink' : 'nusarasa-purple' }} border-4 border-nusarasa-dark rounded-full flex items-center justify-center font-black text-5xl font-display text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6 mt-4">
+                            {{ substr($chef->name, 0, 1) }}
+                        </div>
+                    @endif
 
                     <!-- Chef Name -->
                     <h3 class="text-2xl font-black font-display uppercase tracking-tighter text-nusarasa-dark mb-2">{{ $chef->name }}</h3>

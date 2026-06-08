@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/recipes', [RecipeController::class, 'index']);
 Route::get('/recipes/{id}', [RecipeController::class, 'show']);
 Route::get('/recipes/{id}/ratings', [RatingController::class, 'index']);
+Route::get('/leaderboard/chefs', [App\Http\Controllers\Api\LeaderboardController::class, 'index']);
+Route::post('/recipes/by-ingredients', [App\Http\Controllers\Api\RecommendationController::class, 'getByIngredients']);
 
 // AUTHENTICATED
 Route::middleware('auth:sanctum')->group(function () {
@@ -18,11 +20,18 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
+    Route::get('/recommendations', [App\Http\Controllers\Api\RecommendationController::class, 'getRecommendations']);
+    Route::get('/user/points', [App\Http\Controllers\Api\GamificationController::class, 'getPoints']);
+    Route::get('/user/badges', [App\Http\Controllers\Api\GamificationController::class, 'getBadges']);
+    Route::post('/meal-plan-templates/{id}/apply', [App\Http\Controllers\Api\MealPlanTemplateController::class, 'apply']);
+
     // Chef only
     Route::middleware('role:chef,admin')->group(function () {
         Route::post('/recipes', [RecipeController::class, 'store']);
         Route::put('/recipes/{id}', [RecipeController::class, 'update']);
         Route::delete('/recipes/{id}', [RecipeController::class, 'destroy']);
+        Route::post('/recipes/auto-tags', [App\Http\Controllers\Api\RecommendationController::class, 'getAutoTags']);
+        Route::apiResource('/meal-plan-templates', App\Http\Controllers\Api\MealPlanTemplateController::class)->only(['index', 'store', 'update', 'destroy']);
     });
 
     // Admin only

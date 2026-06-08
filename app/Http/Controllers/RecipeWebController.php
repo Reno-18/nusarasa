@@ -49,6 +49,13 @@ class RecipeWebController extends Controller
         $recipe = Recipe::with('user', 'ratings.user')->findOrFail($id);
         $recipe->increment('view_count');
 
+        if (auth()->check()) {
+            auth()->user()->recipeViews()->create([
+                'recipe_id' => $id,
+                'viewed_at' => now(),
+            ]);
+        }
+
         $averageRating = $recipe->ratings->avg('score');
         
         $isSaved = auth()->check() ? auth()->user()->savedRecipes()->where('recipe_id', $id)->exists() : false;
@@ -62,6 +69,13 @@ class RecipeWebController extends Controller
 
         if (!$recipe) {
             abort(404);
+        }
+
+        if (auth()->check()) {
+            auth()->user()->recipeViews()->create([
+                'meal_api_id' => $mealId,
+                'viewed_at' => now(),
+            ]);
         }
 
         $isSaved = auth()->check() ? auth()->user()->savedRecipes()->where('meal_api_id', $mealId)->exists() : false;

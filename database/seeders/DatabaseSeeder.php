@@ -177,5 +177,7 @@ class DatabaseSeeder extends Seeder
         foreach ($recipes as $recipe) {
             Recipe::create($recipe);
         }
+
+        $this->call(BadgeSeeder::class);
     }
 }

@@ -45,9 +45,14 @@
                 </div>
             </div>
 
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-16 relative z-20" data-aos="fade-up">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 relative z-20" data-aos="fade-up">
                 <div class="flex items-center gap-4 overflow-x-auto pb-4 w-full md:w-auto">
-                    <button class="category-btn px-8 py-3 rounded-pill border-2 border-nusarasa-dark font-black text-xs uppercase tracking-widest transition bg-nusarasa-dark text-white whitespace-nowrap" data-category="">Semua</button>
+                    <a href="{{ route('recipes.by-ingredients') }}" class="px-8 py-3 rounded-pill border-2 border-nusarasa-dark font-black text-xs uppercase tracking-widest transition bg-nusarasa-purple text-white hover:bg-nusarasa-dark whitespace-nowrap flex items-center gap-2">
+                        <span class="text-base">🧑‍🍳</span> Masak dari Bahan?
+                    </a>
+                    <a href="{{ route('saved.index') }}" class="px-8 py-3 rounded-pill border-2 border-nusarasa-dark font-black text-xs uppercase tracking-widest transition bg-nusarasa-yellow text-nusarasa-dark hover:bg-nusarasa-dark hover:text-white whitespace-nowrap flex items-center gap-2">
+                        <span class="text-base">⭐</span> Koleksi Favorit
+                    </a>
                     @foreach($categories as $category)
                         <button class="category-btn px-8 py-3 rounded-pill border-2 border-nusarasa-dark font-black text-xs uppercase tracking-widest transition hover:bg-nusarasa-dark hover:text-white whitespace-nowrap" data-category="{{ $category }}">
                             {{ $category }}

@@ -19,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        \App\Models\Rating::observe(\App\Observers\RatingObserver::class);
+        \App\Models\SavedRecipe::observe(\App\Observers\SavedRecipeObserver::class);
+        \App\Models\Recipe::observe(\App\Observers\RecipeObserver::class);
     }
 }

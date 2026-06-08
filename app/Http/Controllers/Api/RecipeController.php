@@ -25,7 +25,7 @@ class RecipeController extends Controller
 
     public function index(Request $request)
     {
-        $query = Recipe::where('is_approved', true)->with('user');
+        $query = Recipe::where('is_approved', true)->with('user')->withAvg('ratings', 'score');
 
         // Search
         if ($request->has('search') && !empty($request->search)) {
@@ -102,6 +102,13 @@ class RecipeController extends Controller
 
         // Increment view count
         $recipe->increment('view_count');
+
+        if (auth('sanctum')->check()) {
+            auth('sanctum')->user()->recipeViews()->create([
+                'recipe_id' => $id,
+                'viewed_at' => now(),
+            ]);
+        }
 
         return $this->successResponse(new RecipeResource($recipe), 'Recipe retrieved successfully');
     }

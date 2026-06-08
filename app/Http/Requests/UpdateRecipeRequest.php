@@ -29,6 +29,9 @@ class UpdateRecipeRequest extends FormRequest
             'ingredients' => 'required|string',
             'instructions' => 'required|string',
             'image' => 'nullable|image|max:2048',
+            'difficulty' => 'nullable|string',
+            'nutrition' => 'nullable|array',
+            'tags' => 'nullable|array',
         ];
     }
 }

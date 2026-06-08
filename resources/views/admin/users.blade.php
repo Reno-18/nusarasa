@@ -29,9 +29,13 @@
                             <tr class="user-row hover:bg-nusarasa-cream/30 transition" data-id="{{ $user->id }}">
                                 <td class="px-8 py-8">
                                     <div class="flex items-center gap-4">
-                                        <div class="w-12 h-12 bg-nusarasa-purple border-2 border-nusarasa-dark rounded-full flex items-center justify-center font-black text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-white">
-                                            {{ substr($user->name, 0, 1) }}
-                                        </div>
+                                        @if($user->avatar_url)
+                                            <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="w-12 h-12 object-cover border-2 border-nusarasa-dark rounded-full shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                                        @else
+                                            <div class="w-12 h-12 bg-nusarasa-purple border-2 border-nusarasa-dark rounded-full flex items-center justify-center font-black text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-white">
+                                                {{ substr($user->name, 0, 1) }}
+                                            </div>
+                                        @endif
                                         <div class="font-black text-xl font-display text-nusarasa-dark uppercase tracking-tighter">{{ $user->name }}</div>
                                     </div>
                                 </td>
@@ -53,11 +57,30 @@
                                 <td class="px-8 py-8 text-right">
                                     @if($user->id != auth()->id())
                                         <div class="inline-flex items-center gap-4">
-                                            <select class="role-select px-6 py-3 bg-nusarasa-cream border-2 border-nusarasa-dark rounded-pill font-black text-[10px] uppercase tracking-widest focus:ring-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" data-id="{{ $user->id }}">
-                                                <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>Anggota</option>
-                                                <option value="chef" {{ $user->role == 'chef' ? 'selected' : '' }}>Chef</option>
-                                                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Kepala Chef</option>
-                                            </select>
+                                            <div x-data="{ 
+                                                open: false, 
+                                                role: '{{ $user->role }}',
+                                                get roleLabel() {
+                                                    if (this.role === 'admin') return 'Kepala Chef';
+                                                    if (this.role === 'chef') return 'Chef';
+                                                    return 'Anggota';
+                                                },
+                                                updateRole(newRole) {
+                                                    if(this.role === newRole) return;
+                                                    this.role = newRole;
+                                                    updateUserRole({{ $user->id }}, newRole, this.$el);
+                                                }
+                                            }" class="relative inline-block text-left" :class="open ? 'z-50' : 'z-10'">
+                                                <button @click="open = !open" @click.away="open = false" class="px-6 py-3 bg-nusarasa-cream border-2 border-nusarasa-dark rounded-pill font-black text-[10px] uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-between min-w-[150px] hover:translate-y-[2px] hover:translate-x-[2px] hover:shadow-none transition-all">
+                                                    <span x-text="roleLabel"></span>
+                                                    <span>▾</span>
+                                                </button>
+                                                <div x-show="open" x-transition style="display:none;" class="absolute right-0 mt-2 w-full min-w-[150px] bg-white border-2 border-nusarasa-dark rounded-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden z-[60]">
+                                                    <button @click="updateRole('user'); open = false" class="w-full text-left px-4 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-nusarasa-cream transition-colors" :class="role === 'user' ? 'bg-nusarasa-yellow' : ''">Anggota</button>
+                                                    <button @click="updateRole('chef'); open = false" class="w-full text-left px-4 py-3 text-[10px] font-black uppercase tracking-widest border-t border-nusarasa-dark/10 hover:bg-nusarasa-cream transition-colors" :class="role === 'chef' ? 'bg-nusarasa-yellow' : ''">Chef</button>
+                                                    <button @click="updateRole('admin'); open = false" class="w-full text-left px-4 py-3 text-[10px] font-black uppercase tracking-widest border-t border-nusarasa-dark/10 hover:bg-nusarasa-cream transition-colors" :class="role === 'admin' ? 'bg-nusarasa-yellow' : ''">Kepala Chef</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     @else
                                         <span class="text-[10px] font-black uppercase tracking-widest opacity-30 italic mr-6">Akun Anda</span>
@@ -92,21 +115,42 @@
                                                 (user.role == 'chef' ? 'bg-blue-100 text-blue-700 border-blue-500 shadow-[2px_2px_0px_0px_rgba(59,130,246,1)]' : 
                                                 'bg-gray-100 text-gray-700 border-gray-500 shadow-[2px_2px_0px_0px_rgba(107,114,128,1)]');
                                 
+                                const avatarHtml = user.avatar_url 
+                                    ? `<img src="${user.avatar_url}" alt="${user.name}" class="w-12 h-12 object-cover border-2 border-nusarasa-dark rounded-full shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">`
+                                    : `<div class="w-12 h-12 bg-nusarasa-purple border-2 border-nusarasa-dark rounded-full flex items-center justify-center font-black text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-white">${user.name.charAt(0)}</div>`;
+                                
                                 const actionHtml = isSelf 
                                     ? '<span class="text-[10px] font-black uppercase tracking-widest opacity-30 italic mr-6">Akun Anda</span>'
-                                    : `<select class="role-select px-6 py-3 bg-nusarasa-cream border-2 border-nusarasa-dark rounded-pill font-black text-[10px] uppercase tracking-widest focus:ring-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" data-id="${user.id}">
-                                        <option value="user" ${user.role == 'user' ? 'selected' : ''}>Anggota</option>
-                                        <option value="chef" ${user.role == 'chef' ? 'selected' : ''}>Chef</option>
-                                        <option value="admin" ${user.role == 'admin' ? 'selected' : ''}>Kepala Chef</option>
-                                       </select>`;
+                                    : `<div x-data="{ 
+                                            open: false, 
+                                            role: '${user.role}',
+                                            get roleLabel() {
+                                                if (this.role === 'admin') return 'Kepala Chef';
+                                                if (this.role === 'chef') return 'Chef';
+                                                return 'Anggota';
+                                            },
+                                            updateRole(newRole) {
+                                                if(this.role === newRole) return;
+                                                this.role = newRole;
+                                                updateUserRole(${user.id}, newRole, this.$el);
+                                            }
+                                        }" class="relative inline-block text-left" :class="open ? 'z-50' : 'z-10'">
+                                            <button @click="open = !open" @click.away="open = false" class="px-6 py-3 bg-nusarasa-cream border-2 border-nusarasa-dark rounded-pill font-black text-[10px] uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-between min-w-[150px] hover:translate-y-[2px] hover:translate-x-[2px] hover:shadow-none transition-all">
+                                                <span x-text="roleLabel"></span>
+                                                <span>▾</span>
+                                            </button>
+                                            <div x-show="open" x-transition style="display:none;" class="absolute right-0 mt-2 w-full min-w-[150px] bg-white border-2 border-nusarasa-dark rounded-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden z-[60]">
+                                                <button @click="updateRole('user'); open = false" class="w-full text-left px-4 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-nusarasa-cream transition-colors" :class="role === 'user' ? 'bg-nusarasa-yellow' : ''">Anggota</button>
+                                                <button @click="updateRole('chef'); open = false" class="w-full text-left px-4 py-3 text-[10px] font-black uppercase tracking-widest border-t border-nusarasa-dark/10 hover:bg-nusarasa-cream transition-colors" :class="role === 'chef' ? 'bg-nusarasa-yellow' : ''">Chef</button>
+                                                <button @click="updateRole('admin'); open = false" class="w-full text-left px-4 py-3 text-[10px] font-black uppercase tracking-widest border-t border-nusarasa-dark/10 hover:bg-nusarasa-cream transition-colors" :class="role === 'admin' ? 'bg-nusarasa-yellow' : ''">Kepala Chef</button>
+                                            </div>
+                                        </div>`;
 
                                 html += `
                                     <tr class="user-row hover:bg-nusarasa-cream/30 transition" data-id="${user.id}">
                                         <td class="px-8 py-8">
                                             <div class="flex items-center gap-4">
-                                                <div class="w-12 h-12 bg-nusarasa-purple border-2 border-nusarasa-dark rounded-full flex items-center justify-center font-black text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-white">
-                                                    ${user.name.charAt(0)}
-                                                </div>
+                                                ${avatarHtml}
                                                 <div class="font-black text-xl font-display text-nusarasa-dark uppercase tracking-tighter">${user.name}</div>
                                             </div>
                                         </td>
@@ -128,11 +172,9 @@
                 });
             });
 
-            // Role Update Logic
-            $(document).on('change', '.role-select', function() {
-                const id = $(this).data('id');
-                const role = $(this).val();
-                const row = $(this).closest('.user-row');
+            // Role Update Logic Function
+            window.updateUserRole = function(id, role, el) {
+                const row = $(el).closest('.user-row');
 
                 $.ajax({
                     url: `/admin/users/${id}/role`,
@@ -151,7 +193,7 @@
                         showToast(response.message, 'success');
                     }
                 });
-            });
+            };
         });
     </script>
     @endpush

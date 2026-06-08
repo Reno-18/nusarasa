@@ -22,11 +22,16 @@ class Recipe extends Model
         'source',
         'is_approved',
         'view_count',
+        'difficulty',
+        'nutrition',
+        'tags',
     ];
 
     protected $casts = [
         'is_approved' => 'boolean',
         'view_count' => 'integer',
+        'nutrition' => 'array',
+        'tags' => 'array',
     ];
 
     public function user(): BelongsTo
@@ -47,5 +52,15 @@ class Recipe extends Model
     public function mealPlanItems(): HasMany
     {
         return $this->hasMany(MealPlanItem::class);
+    }
+
+    public function recipeViews(): HasMany
+    {
+        return $this->hasMany(RecipeView::class);
+    }
+
+    public function recipeTags(): HasMany
+    {
+        return $this->hasMany(RecipeTag::class);
     }
 }

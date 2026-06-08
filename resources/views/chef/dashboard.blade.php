@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-16" data-aos="fade-down">
             <div>
-                <h1 class="text-6xl md:text-8xl font-black font-display uppercase tracking-tighter leading-none text-nusarasa-dark">Dapur<br><span class="text-nusarasa-pink">Kreatif</span></h1>
+                <h1 class="text-6xl md:text-8xl font-black font-display uppercase tracking-tighter leading-none text-nusarasa-dark">Dapur<br><span class="text-[#6D28D9]">Kreatif</span></h1>
                 <p class="font-bold opacity-60 text-sm uppercase tracking-widest mt-4 ml-2">Kelola resep dan pantau performa kulinermu</p>
             </div>
             <a href="{{ route('chef.recipes.create') }}" 

@@ -3,7 +3,7 @@
         <!-- Header -->
         <div class="py-16 text-center" data-aos="zoom-in">
             <h1 class="text-6xl md:text-8xl font-black font-display uppercase tracking-tighter leading-none text-nusarasa-dark mb-4">
-                Koleksi <span class="text-nusarasa-pink">Favorit</span>
+                Koleksi <span class="text-[#6D28D9]">Favorit</span>
             </h1>
             <p class="text-xl font-bold opacity-60 uppercase tracking-widest">Suasana rasa yang kamu simpan untuk nanti</p>
         </div>
