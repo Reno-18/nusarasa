@@ -28,7 +28,7 @@ Route::get('/chefs', [ChefController::class, 'index'])->name('chefs.index');
 Route::get('/leaderboard/chefs', [App\Http\Controllers\LeaderboardController::class, 'index'])->name('leaderboard.chefs');
 
 // Authenticated users
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         $user = auth()->user();
         if ($user->isAdmin()) {

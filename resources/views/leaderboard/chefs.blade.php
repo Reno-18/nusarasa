@@ -3,12 +3,12 @@
         <!-- Header -->
         <div class="py-16 text-center" data-aos="zoom-in">
             @if($role === 'chef')
-            <h1 class="text-6xl md:text-8xl font-black font-display uppercase tracking-tighter leading-none text-nusarasa-dark mb-4">
+            <h1 class="text-4xl sm:text-6xl md:text-8xl font-black font-display uppercase tracking-tighter leading-none text-nusarasa-dark mb-4">
                 Chef <span class="text-[#6D28D9]">Terbaik</span>
             </h1>
             <p class="text-xl font-bold opacity-60 uppercase tracking-widest text-nusarasa-dark">Para pahlawan dapur dengan poin tertinggi di NusaRasa</p>
             @else
-            <h1 class="text-6xl md:text-8xl font-black font-display uppercase tracking-tighter leading-none text-nusarasa-dark mb-4">
+            <h1 class="text-4xl sm:text-6xl md:text-8xl font-black font-display uppercase tracking-tighter leading-none text-nusarasa-dark mb-4">
                 Pengguna <span class="text-nusarasa-pink">Teraktif</span>
             </h1>
             <p class="text-xl font-bold opacity-60 uppercase tracking-widest text-nusarasa-dark">Komunitas pecinta kuliner dengan kontribusi terbanyak</p>
@@ -16,7 +16,7 @@
         </div>
 
         <!-- Role Filter -->
-        <div class="flex justify-center gap-4 mb-6" data-aos="fade-up">
+        <div class="flex flex-wrap justify-center gap-3 mb-6" data-aos="fade-up">
             <a href="{{ route('leaderboard.chefs', ['role' => 'chef', 'period' => $period]) }}"
                class="px-8 py-3 border-2 border-nusarasa-dark rounded-pill font-black text-xs uppercase tracking-widest transition shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-0.5 hover:shadow-none {{ $role === 'chef' ? 'bg-nusarasa-yellow text-nusarasa-dark' : 'bg-white text-nusarasa-dark hover:bg-nusarasa-cream' }}">
                 👨‍🍳 Chef
@@ -28,7 +28,7 @@
         </div>
 
         <!-- Period Filter -->
-        <div class="flex justify-center gap-4 mb-12" data-aos="fade-up">
+        <div class="flex flex-wrap justify-center gap-3 mb-12" data-aos="fade-up">
             <a href="{{ route('leaderboard.chefs', ['period' => 'all', 'role' => $role]) }}"
                class="px-8 py-3 border-2 border-nusarasa-dark rounded-pill font-black text-xs uppercase tracking-widest transition shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-0.5 hover:shadow-none {{ $period === 'all' ? 'bg-nusarasa-dark text-white' : 'bg-white text-nusarasa-dark hover:bg-nusarasa-cream' }}">
                 🏆 Sepanjang Masa
@@ -132,7 +132,7 @@
             @else
                 <div class="divide-y-4 divide-nusarasa-dark/10">
                     @foreach($users as $rank => $user)
-                        <div class="flex items-center gap-6 px-8 py-5 hover:bg-nusarasa-cream/50 transition-colors {{ $rank === 0 ? 'bg-nusarasa-yellow/20' : '' }}">
+                        <div class="flex items-center gap-3 sm:gap-6 px-4 sm:px-8 py-4 sm:py-5 hover:bg-nusarasa-cream/50 transition-colors {{ $rank === 0 ? 'bg-nusarasa-yellow/20' : '' }}">
                             <!-- Rank Badge -->
                             <div class="w-10 h-10 flex items-center justify-center flex-shrink-0">
                                 @if($rank === 0)

@@ -57,9 +57,17 @@
 
             <!-- Right Side: Info & Actions -->
             <div class="lg:col-span-5">
-                <h1 class="text-5xl md:text-6xl font-black font-display uppercase tracking-tighter leading-[0.9] mb-8 text-nusarasa-dark">
+                <h1 class="text-3xl sm:text-5xl md:text-6xl font-black font-display uppercase tracking-tighter leading-[0.9] mb-6 text-nusarasa-dark">
                     {{ $recipe->title }}
                 </h1>
+
+                @if(!empty($recipe->tags))
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        @foreach($recipe->tags as $tag)
+                            <span class="px-4 py-1.5 bg-nusarasa-cream border-2 border-nusarasa-dark rounded-pill font-black text-[10px] uppercase tracking-widest text-nusarasa-dark">#{{ $tag }}</span>
+                        @endforeach
+                    </div>
+                @endif
 
                 <!-- Rating Summary -->
                 <div class="flex items-center gap-4 mb-8">

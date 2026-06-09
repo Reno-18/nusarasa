@@ -42,7 +42,7 @@
 
             @if (Route::has('password.request'))
                 <a class="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-nusarasa-dark transition" href="{{ route('password.request') }}">
-                    {{ __('Lost access?') }}
+                    Lupa Password?
                 </a>
             @endif
         </div>

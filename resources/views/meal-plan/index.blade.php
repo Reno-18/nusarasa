@@ -9,7 +9,7 @@
 
         <!-- Header -->
         <div class="py-16 text-center" data-aos="zoom-in">
-            <h1 class="text-6xl md:text-8xl font-black font-display uppercase tracking-tighter leading-none text-nusarasa-dark mb-4">
+            <h1 class="text-4xl sm:text-6xl md:text-8xl font-black font-display uppercase tracking-tighter leading-none text-nusarasa-dark mb-4">
                 Rencana <span class="text-[#6D28D9]">Makan</span>
             </h1>
             <p class="text-xl font-bold opacity-60 uppercase tracking-widest">Atur suasana kulinermu minggu ini</p>
@@ -105,7 +105,7 @@
                                     <span>{{ $protPct }}%</span>
                                 </div>
                                 <div class="h-2 bg-white border-2 border-nusarasa-dark rounded-md overflow-hidden mt-0.5">
-                                    <div class="h-full bg-nusarasa-purple transition-all duration-500" style="width: {{ $protPct }}%"></div>
+                                    <div class="h-full bg-indigo-500 transition-all duration-500" style="width: {{ $protPct }}%"></div>
                                 </div>
                             </div>
                             <div>
@@ -114,7 +114,7 @@
                                     <span>{{ $carbPct }}%</span>
                                 </div>
                                 <div class="h-2 bg-white border-2 border-nusarasa-dark rounded-md overflow-hidden mt-0.5">
-                                    <div class="h-full bg-nusarasa-yellow transition-all duration-500" style="width: {{ $carbPct }}%"></div>
+                                    <div class="h-full bg-amber-400 transition-all duration-500" style="width: {{ $carbPct }}%"></div>
                                 </div>
                             </div>
                             <div>
@@ -123,7 +123,7 @@
                                     <span>{{ $fatPct }}%</span>
                                 </div>
                                 <div class="h-2 bg-white border-2 border-nusarasa-dark rounded-md overflow-hidden mt-0.5">
-                                    <div class="h-full bg-nusarasa-pink transition-all duration-500" style="width: {{ $fatPct }}%"></div>
+                                    <div class="h-full bg-rose-400 transition-all duration-500" style="width: {{ $fatPct }}%"></div>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +169,7 @@
                                     
                                     <!-- Protein Sticker -->
                                     <div class="p-3 bg-white border-2 border-nusarasa-dark rounded-2xl flex items-center gap-3 shadow-[3px_3px_0px_0px_rgba(26,26,26,1)] transform rotate-1 hover:rotate-0 transition-transform duration-200">
-                                        <span class="w-4 h-4 bg-[#e5dcf4] border border-black rounded-md flex-shrink-0 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"></span>
+                                        <span class="w-4 h-4 bg-indigo-500 border border-black rounded-md flex-shrink-0 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"></span>
                                         <div class="min-w-0">
                                             <p class="text-[8px] font-black uppercase tracking-wider text-nusarasa-dark/40">Protein</p>
                                             <p class="text-sm font-black text-nusarasa-dark leading-none mt-0.5 truncate">{{ $nutritionSummary['protein'] }}g</p>
@@ -178,7 +178,7 @@
                                     
                                     <!-- Carbs Sticker -->
                                     <div class="p-3 bg-white border-2 border-nusarasa-dark rounded-2xl flex items-center gap-3 shadow-[3px_3px_0px_0px_rgba(26,26,26,1)] transform rotate-1 hover:rotate-0 transition-transform duration-200">
-                                        <span class="w-4 h-4 bg-[#ffd966] border border-black rounded-md flex-shrink-0 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"></span>
+                                        <span class="w-4 h-4 bg-amber-400 border border-black rounded-md flex-shrink-0 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"></span>
                                         <div class="min-w-0">
                                             <p class="text-[8px] font-black uppercase tracking-wider text-nusarasa-dark/40">Karbohidrat</p>
                                             <p class="text-sm font-black text-nusarasa-dark leading-none mt-0.5 truncate">{{ $nutritionSummary['carbs'] }}g</p>
@@ -187,7 +187,7 @@
                                     
                                     <!-- Fat Sticker -->
                                     <div class="p-3 bg-white border-2 border-nusarasa-dark rounded-2xl flex items-center gap-3 shadow-[3px_3px_0px_0px_rgba(26,26,26,1)] transform -rotate-1 hover:rotate-0 transition-transform duration-200">
-                                        <span class="w-4 h-4 bg-[#f9b4c8] border border-black rounded-md flex-shrink-0 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"></span>
+                                        <span class="w-4 h-4 bg-rose-400 border border-black rounded-md flex-shrink-0 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"></span>
                                         <div class="min-w-0">
                                             <p class="text-[8px] font-black uppercase tracking-wider text-nusarasa-dark/40">Lemak</p>
                                             <p class="text-sm font-black text-nusarasa-dark leading-none mt-0.5 truncate">{{ $nutritionSummary['fat'] }}g</p>
@@ -196,7 +196,7 @@
                                     
                                     <!-- Fiber Sticker -->
                                     <div class="p-3 bg-white border-2 border-nusarasa-dark rounded-2xl flex items-center gap-3 shadow-[3px_3px_0px_0px_rgba(26,26,26,1)] sm:col-span-2 transform rotate-0.5 hover:rotate-0 transition-transform duration-200">
-                                        <span class="w-4 h-4 bg-[#d4e2d4] border border-black rounded-md flex-shrink-0 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"></span>
+                                        <span class="w-4 h-4 bg-emerald-400 border border-black rounded-md flex-shrink-0 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"></span>
                                         <div class="min-w-0">
                                             <p class="text-[8px] font-black uppercase tracking-wider text-nusarasa-dark/40">Serat Makanan</p>
                                             <p class="text-sm font-black text-nusarasa-dark leading-none mt-0.5 truncate">{{ $nutritionSummary['fiber'] }}g</p>
@@ -388,7 +388,7 @@
                             {{ $nutritionSummary['fat'] }},
                             {{ $nutritionSummary['fiber'] }}
                         ],
-                        backgroundColor: ['#1a1a1a', '#e5dcf4', '#ffd966', '#f9b4c8', '#d4e2d4'],
+                        backgroundColor: ['#1a1a1a', '#6366f1', '#fbbf24', '#fb7185', '#34d399'],
                         borderColor: '#1a1a1a',
                         borderWidth: 3,
                     }]

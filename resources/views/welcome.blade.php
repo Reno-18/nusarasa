@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         
         <!-- Hero Section -->
-        <div class="relative py-20 mb-20 flex flex-col items-center justify-center min-h-[600px] overflow-visible">
+        <div class="relative py-10 md:py-20 mb-10 md:mb-20 flex flex-col items-center justify-center min-h-[50vh] md:min-h-[600px] overflow-visible">
             
             <!-- Busy Floating Food Elements -->
             <!-- Top Row -->
@@ -44,15 +44,15 @@
                 <!-- Custom FOOD MOOD Logo -->
                 <div class="flex flex-col items-center gap-2 select-none pointer-events-none" data-aos="zoom-in">
                     <!-- FOOD Row -->
-                    <div class="flex items-center gap-4 text-[5rem] md:text-[8rem] lg:text-[10rem] font-black font-display leading-none tracking-tighter text-nusarasa-dark uppercase">
+                    <div class="flex items-center gap-2 md:gap-4 text-[3.5rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-black font-display leading-none tracking-tighter text-nusarasa-dark uppercase">
                         <span>F</span>
-                        <div class="w-24 md:w-56 lg:w-80 h-16 md:h-28 lg:h-36 border-[12px] md:border-[18px] lg:border-[24px] border-nusarasa-dark rounded-full"></div>
+                        <div class="w-12 sm:w-24 md:w-56 lg:w-80 h-9 sm:h-16 md:h-28 lg:h-36 border-[7px] sm:border-[12px] md:border-[18px] lg:border-[24px] border-nusarasa-dark rounded-full"></div>
                         <span>D</span>
                     </div>
                     <!-- MOOD Row -->
-                    <div class="flex items-center gap-4 text-[5rem] md:text-[8rem] lg:text-[10rem] font-black font-display leading-none tracking-tighter text-nusarasa-dark uppercase">
+                    <div class="flex items-center gap-2 md:gap-4 text-[3.5rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-black font-display leading-none tracking-tighter text-nusarasa-dark uppercase">
                         <span>M</span>
-                        <div class="w-24 md:w-56 lg:w-80 h-16 md:h-28 lg:h-36 border-[12px] md:border-[18px] lg:border-[24px] border-nusarasa-dark rounded-full"></div>
+                        <div class="w-12 sm:w-24 md:w-56 lg:w-80 h-9 sm:h-16 md:h-28 lg:h-36 border-[7px] sm:border-[12px] md:border-[18px] lg:border-[24px] border-nusarasa-dark rounded-full"></div>
                         <span>D</span>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                 </div>
             </div>
 
-            <div class="mt-20 flex flex-wrap justify-center gap-4" data-aos="fade-up" data-aos-delay="400">
+            <div class="mt-8 md:mt-20 flex flex-wrap justify-center gap-4 px-4" data-aos="fade-up" data-aos-delay="400">
                 <a href="{{ route('recipes.index') }}" class="bg-nusarasa-yellow px-10 py-5 border-2 border-nusarasa-dark rounded-pill flex items-center gap-4 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
                     <span class="font-black text-sm uppercase tracking-widest text-nusarasa-dark">Mulai Eksplorasi Resep</span>
                     <svg class="w-6 h-6 text-nusarasa-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>

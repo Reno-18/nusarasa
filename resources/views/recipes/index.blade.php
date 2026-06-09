@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <!-- Header -->
         <div class="py-16 text-center" data-aos="zoom-in">
-            <h1 class="text-6xl md:text-8xl font-black font-display uppercase tracking-tighter leading-none text-nusarasa-dark mb-4">
+            <h1 class="text-4xl sm:text-6xl md:text-8xl font-black font-display uppercase tracking-tighter leading-none text-nusarasa-dark mb-4">
                 Eksplorasi <span class="text-[#6D28D9]">Rasa</span>
             </h1>
             <p class="text-xl font-bold opacity-60 uppercase tracking-widest text-nusarasa-dark">Temukan inspirasi masakan harianmu dari seluruh penjuru dunia</p>
@@ -10,7 +10,7 @@
 
         <div class="mb-12">
             <!-- Search and Filter -->
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-16 relative z-30" data-aos="fade-up">
+            <div class="flex flex-col gap-4 mb-8 relative z-30" data-aos="fade-up">
                 <div class="relative w-full max-w-xl">
                     <input type="text" id="search-input" placeholder="Cari suasana makanmu..." 
                            class="w-full px-8 py-5 bg-white border-2 border-nusarasa-dark rounded-pill font-bold focus:ring-0 focus:border-nusarasa-dark placeholder-gray-400 text-lg shadow-xl"
@@ -46,7 +46,7 @@
             </div>
 
             <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 relative z-20" data-aos="fade-up">
-                <div class="flex items-center gap-4 overflow-x-auto pb-4 w-full md:w-auto">
+                <div class="flex items-center gap-3 overflow-x-auto pb-3 w-full" style="-webkit-overflow-scrolling: touch; scrollbar-width: none;">
                     <a href="{{ route('recipes.by-ingredients') }}" class="px-8 py-3 rounded-pill border-2 border-nusarasa-dark font-black text-xs uppercase tracking-widest transition bg-nusarasa-purple text-white hover:bg-nusarasa-dark whitespace-nowrap flex items-center gap-2">
                         <span class="text-base">🧑‍🍳</span> Masak dari Bahan?
                     </a>

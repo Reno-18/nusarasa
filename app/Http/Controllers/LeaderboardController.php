@@ -18,8 +18,7 @@ class LeaderboardController extends Controller
 
         $query = User::where('show_on_leaderboard', true)
             ->where('role', $role)
-            ->with('points')
-            ->whereHas('points');
+            ->with('points');
 
         $allUsers = $query->get();
 
