@@ -8,6 +8,7 @@ use App\Models\MealPlanTemplate;
 use App\Models\MealPlanStreak;
 use App\Models\Recipe;
 use App\Services\NutritionService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class MealPlanWebController extends Controller
@@ -140,6 +141,40 @@ class MealPlanWebController extends Controller
         $shoppingList = $this->nutritionService->getShoppingListForDays($mealPlan, $selectedDays);
 
         return view('meal-plan.shopping-list-result', compact('shoppingList', 'mealPlan', 'selectedDays'));
+    }
+
+    /**
+     * Step 3 — Download the shopping list as a PDF.
+     */
+    public function downloadPdf(Request $request)
+    {
+        $currentWeekStart = now()->startOfWeek()->toDateString();
+        $mealPlan = MealPlan::where('user_id', auth()->id())
+            ->where('week_start', $currentWeekStart)
+            ->with('items.recipe')
+            ->first();
+
+        if (!$mealPlan) {
+            $mealPlan = MealPlan::where('user_id', auth()->id())
+                ->with('items.recipe')
+                ->latest()
+                ->first();
+        }
+
+        if (!$mealPlan) {
+            return redirect()->route('meal-plan.index')->with('error', 'Buat rencana makan terlebih dahulu!');
+        }
+
+        $selectedDays = $request->input('days', []);
+
+        if (empty($selectedDays)) {
+            return back()->with('error', 'Pilih minimal satu hari untuk di-download.');
+        }
+
+        $shoppingList = $this->nutritionService->getShoppingListForDays($mealPlan, $selectedDays);
+
+        $pdf = Pdf::loadView('meal-plan.pdf', compact('shoppingList', 'mealPlan', 'selectedDays'));
+        return $pdf->download('nusarasa_daftar_belanja.pdf');
     }
 
     /**

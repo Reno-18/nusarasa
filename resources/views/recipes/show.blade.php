@@ -150,22 +150,63 @@
                     <div class="bg-nusarasa-purple border-2 border-nusarasa-dark rounded-4xl p-8 mb-8">
                         <h3 class="text-xl font-black font-display uppercase mb-6">Rencanakan Menu</h3>
                         <form id="meal-plan-form" class="space-y-4">
-                            <select name="day_of_week" class="w-full px-6 py-4 bg-white border-2 border-nusarasa-dark rounded-pill font-bold focus:ring-0" required>
-                                <option value="">Pilih Hari</option>
-                                <option value="monday">Senin</option>
-                                <option value="tuesday">Selasa</option>
-                                <option value="wednesday">Rabu</option>
-                                <option value="thursday">Kamis</option>
-                                <option value="friday">Jumat</option>
-                                <option value="saturday">Sabtu</option>
-                                <option value="sunday">Minggu</option>
-                            </select>
-                            <select name="meal_type" class="w-full px-6 py-4 bg-white border-2 border-nusarasa-dark rounded-pill font-bold focus:ring-0" required>
-                                <option value="">Pilih Waktu</option>
-                                <option value="breakfast">Sarapan</option>
-                                <option value="lunch">Makan Siang</option>
-                                <option value="dinner">Makan Malam</option>
-                            </select>
+                            <div x-data="{ 
+                                    open: false, 
+                                    selected: '', 
+                                    options: [
+                                        {value: 'monday', label: 'Senin'},
+                                        {value: 'tuesday', label: 'Selasa'},
+                                        {value: 'wednesday', label: 'Rabu'},
+                                        {value: 'thursday', label: 'Kamis'},
+                                        {value: 'friday', label: 'Jumat'},
+                                        {value: 'saturday', label: 'Sabtu'},
+                                        {value: 'sunday', label: 'Minggu'}
+                                    ]
+                                }" class="relative w-full z-20">
+                                <input type="text" name="day_of_week" x-model="selected" class="absolute opacity-0 w-10 h-10 pointer-events-none -z-10" style="bottom: 0; left: 50%;" required>
+                                <button type="button" @click="open = !open" @click.outside="open = false" 
+                                        class="w-full px-6 py-4 bg-white border-2 border-nusarasa-dark rounded-pill font-bold text-left flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-nusarasa-dark/20">
+                                    <span x-text="selected ? options.find(o => o.value === selected).label : 'Pilih Hari'" :class="{'opacity-50': !selected, 'text-nusarasa-dark': true}"></span>
+                                    <svg class="w-5 h-5 transition-transform" :class="{'rotate-180': open}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                                <div x-show="open" x-transition.opacity.duration.200ms
+                                     class="absolute left-0 right-0 mt-2 bg-white border-2 border-nusarasa-dark rounded-3xl shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] overflow-hidden max-h-60 overflow-y-auto" style="display: none;">
+                                    <template x-for="option in options" :key="option.value">
+                                        <div @click="selected = option.value; open = false" 
+                                             class="px-6 py-3 cursor-pointer hover:bg-nusarasa-yellow font-bold transition-colors border-b last:border-b-0 border-nusarasa-dark/10 text-nusarasa-dark"
+                                             :class="{'bg-nusarasa-cream': selected === option.value}">
+                                            <span x-text="option.label"></span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div x-data="{ 
+                                    open: false, 
+                                    selected: '', 
+                                    options: [
+                                        {value: 'breakfast', label: 'Sarapan'},
+                                        {value: 'lunch', label: 'Makan Siang'},
+                                        {value: 'dinner', label: 'Makan Malam'}
+                                    ]
+                                }" class="relative w-full z-10">
+                                <input type="text" name="meal_type" x-model="selected" class="absolute opacity-0 w-10 h-10 pointer-events-none -z-10" style="bottom: 0; left: 50%;" required>
+                                <button type="button" @click="open = !open" @click.outside="open = false" 
+                                        class="w-full px-6 py-4 bg-white border-2 border-nusarasa-dark rounded-pill font-bold text-left flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-nusarasa-dark/20">
+                                    <span x-text="selected ? options.find(o => o.value === selected).label : 'Pilih Waktu'" :class="{'opacity-50': !selected, 'text-nusarasa-dark': true}"></span>
+                                    <svg class="w-5 h-5 transition-transform" :class="{'rotate-180': open}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                                <div x-show="open" x-transition.opacity.duration.200ms
+                                     class="absolute left-0 right-0 mt-2 bg-white border-2 border-nusarasa-dark rounded-3xl shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] overflow-hidden" style="display: none;">
+                                    <template x-for="option in options" :key="option.value">
+                                        <div @click="selected = option.value; open = false" 
+                                             class="px-6 py-3 cursor-pointer hover:bg-nusarasa-yellow font-bold transition-colors border-b last:border-b-0 border-nusarasa-dark/10 text-nusarasa-dark"
+                                             :class="{'bg-nusarasa-cream': selected === option.value}">
+                                            <span x-text="option.label"></span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
                             <input type="hidden" name="recipe_id" value="{{ $recipe->id }}">
                             <input type="hidden" name="week_start" value="{{ now()->startOfWeek()->format('Y-m-d') }}">
                             <button type="submit" class="w-full py-4 bg-nusarasa-dark text-white rounded-pill font-black uppercase tracking-widest text-xs hover:opacity-80 transition">

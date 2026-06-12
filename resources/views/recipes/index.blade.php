@@ -10,7 +10,7 @@
 
         <div class="mb-12">
             <!-- Search and Filter -->
-            <div class="flex flex-col gap-4 mb-8 relative z-30" data-aos="fade-up">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 relative z-30" data-aos="fade-up">
                 <div class="relative w-full max-w-xl">
                     <input type="text" id="search-input" placeholder="Cari suasana makanmu..." 
                            class="w-full px-8 py-5 bg-white border-2 border-nusarasa-dark rounded-pill font-bold focus:ring-0 focus:border-nusarasa-dark placeholder-gray-400 text-lg shadow-xl"
@@ -45,8 +45,13 @@
                 </div>
             </div>
 
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 relative z-20" data-aos="fade-up">
-                <div class="flex items-center gap-3 overflow-x-auto pb-3 w-full" style="-webkit-overflow-scrolling: touch; scrollbar-width: none;">
+            <div class="mb-8 z-20 flex items-center gap-2" data-aos="fade-up">
+                <!-- Scroll Left Button -->
+                <button type="button" id="scroll-left-btn" class="flex-shrink-0 z-10 w-10 h-10 bg-white border-2 border-nusarasa-dark rounded-full items-center justify-center shadow-[2px_2px_0px_0px_rgba(26,26,26,1)] hover:bg-nusarasa-cream transition-all hidden md:flex" style="margin-top: -6px;">
+                    <svg class="w-5 h-5 text-nusarasa-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+
+                <div id="category-scroll-container" class="flex-1 flex items-center gap-3 overflow-x-auto pb-3 w-full px-2" style="-webkit-overflow-scrolling: touch; scrollbar-width: none; scroll-behavior: smooth;">
                     <a href="{{ route('recipes.by-ingredients') }}" class="px-8 py-3 rounded-pill border-2 border-nusarasa-dark font-black text-xs uppercase tracking-widest transition bg-nusarasa-purple text-white hover:bg-nusarasa-dark whitespace-nowrap flex items-center gap-2">
                         <span class="text-base">🧑‍🍳</span> Masak dari Bahan?
                     </a>
@@ -60,6 +65,11 @@
                     @endforeach
                     <input type="hidden" id="category-filter" value="{{ request('category') }}">
                 </div>
+
+                <!-- Scroll Right Button -->
+                <button type="button" id="scroll-right-btn" class="flex-shrink-0 z-10 w-10 h-10 bg-white border-2 border-nusarasa-dark rounded-full items-center justify-center shadow-[2px_2px_0px_0px_rgba(26,26,26,1)] hover:bg-nusarasa-cream transition-all hidden md:flex" style="margin-top: -6px;">
+                    <svg class="w-5 h-5 text-nusarasa-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
+                </button>
             </div>
 
             <!-- Recipe Grid -->
@@ -115,6 +125,15 @@
 
                 dropdownMenu.addClass('hidden');
                 dropdownArrow.removeClass('rotate-180');
+            });
+
+            // Category Scroll Logic
+            const scrollContainer = document.getElementById('category-scroll-container');
+            $('#scroll-left-btn').on('click', function() {
+                scrollContainer.scrollBy({ left: -200, behavior: 'smooth' });
+            });
+            $('#scroll-right-btn').on('click', function() {
+                scrollContainer.scrollBy({ left: 200, behavior: 'smooth' });
             });
         });
     </script>

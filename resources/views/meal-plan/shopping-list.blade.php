@@ -4,7 +4,7 @@
         <!-- Header -->
         <div class="py-16 text-center" data-aos="zoom-in">
             <h1 class="text-6xl md:text-7xl font-black font-display uppercase tracking-tighter leading-none text-nusarasa-dark mb-4">
-                Daftar <span class="text-nusarasa-yellow">Belanja</span>
+                Daftar <span class="text-[#6D28D9]">Belanja</span>
             </h1>
             <p class="text-xl font-bold opacity-60 uppercase tracking-widest text-nusarasa-dark">
                 Pilih hari mana saja yang ingin kamu belanjakan

@@ -42,6 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/saved', [SavedRecipeWebController::class, 'index'])->name('saved.index');
     Route::get('/meal-plan/shopping-list', [MealPlanWebController::class, 'shoppingList'])->name('meal-plan.shopping-list');
     Route::post('/meal-plan/shopping-list', [MealPlanWebController::class, 'generateShoppingList'])->name('meal-plan.shopping-list.generate');
+    Route::post('/meal-plan/shopping-list/pdf', [MealPlanWebController::class, 'downloadPdf'])->name('meal-plan.download-pdf');
     Route::delete('/meal-plan/items/{id}', [MealPlanWebController::class, 'destroyItem'])->name('meal-plan.items.destroy');
     Route::get('/meal-plan', [MealPlanWebController::class, 'index'])->name('meal-plan.index');
 

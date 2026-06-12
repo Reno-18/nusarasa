@@ -4,7 +4,7 @@
         <!-- Header -->
         <div class="py-16 text-center" data-aos="zoom-in">
             <h1 class="text-6xl md:text-7xl font-black font-display uppercase tracking-tighter leading-none text-nusarasa-dark mb-4">
-                Daftar <span class="text-nusarasa-yellow">Belanja</span>
+                Daftar <span class="text-[#6D28D9]">Belanja</span>
             </h1>
             @php
                 $dayLabels = ['monday' => 'Senin', 'tuesday' => 'Selasa', 'wednesday' => 'Rabu', 'thursday' => 'Kamis', 'friday' => 'Jumat', 'saturday' => 'Sabtu', 'sunday' => 'Minggu'];
@@ -24,12 +24,18 @@
                 </svg>
                 Ubah Pilihan Hari
             </a>
-            <button onclick="window.print()"
-                    class="inline-flex items-center gap-3 px-8 py-3 bg-nusarasa-dark text-white border-2 border-nusarasa-dark
-                           rounded-pill font-black text-xs uppercase tracking-widest
-                           shadow-[4px_4px_0px_0px_rgba(255,209,0,1)] hover:translate-y-0.5 hover:shadow-none transition-all">
-                🖨️ Cetak Daftar
-            </button>
+            <form action="{{ route('meal-plan.download-pdf') }}" method="POST" class="inline">
+                @csrf
+                @foreach($selectedDays as $day)
+                    <input type="hidden" name="days[]" value="{{ $day }}">
+                @endforeach
+                <button type="submit"
+                        class="inline-flex items-center gap-3 px-8 py-3 bg-nusarasa-dark text-white border-2 border-nusarasa-dark
+                               rounded-pill font-black text-xs uppercase tracking-widest
+                               shadow-[4px_4px_0px_0px_rgba(255,209,0,1)] hover:translate-y-0.5 hover:shadow-none transition-all">
+                    ⬇️ Download Daftar
+                </button>
+            </form>
         </div>
 
         <!-- Selected days chips -->
@@ -106,14 +112,14 @@
                     <div class="bg-white border-2 border-nusarasa-dark rounded-3xl overflow-hidden shadow-[5px_5px_0px_0px_rgba(26,26,26,1)]">
                         <div class="px-6 py-4 bg-nusarasa-purple border-b-2 border-nusarasa-dark flex items-center justify-between flex-wrap gap-2">
                             <div>
-                                <h3 class="text-base font-black text-white uppercase tracking-tight leading-tight">
+                                <h3 class="text-base font-black text-nusarasa-dark uppercase tracking-tight leading-tight">
                                     {{ $recipeItem['title'] }}
                                 </h3>
-                                <span class="text-white/70 font-bold text-xs">
+                                <span class="text-nusarasa-dark/70 font-bold text-xs">
                                     {{ $recipeItem['day'] }} · {{ $recipeItem['meal_type'] }}
                                 </span>
                             </div>
-                            <span class="px-3 py-1 bg-white/20 border border-white/30 rounded-lg text-[10px] font-black text-white uppercase tracking-widest">
+                            <span class="px-3 py-1 bg-white/50 border border-nusarasa-dark/30 rounded-lg text-[10px] font-black text-nusarasa-dark uppercase tracking-widest">
                                 {{ count($recipeItem['ingredients']) }} bahan
                             </span>
                         </div>

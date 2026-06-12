@@ -8,7 +8,7 @@
     <title>{{ config('app.name', 'NusaRasa') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" type="image/jpeg" href="{{ asset('favicon.jpg') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
