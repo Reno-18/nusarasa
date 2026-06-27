@@ -33,7 +33,7 @@ class MealPlanWebController extends Controller
             ->first();
 
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-        $mealTypes = ['breakfast', 'lunch', 'dinner'];
+        $mealTypes = ['breakfast', 'lunch', 'dinner', 'snacks'];
 
         // Get nutrition summary
         $nutritionSummary = $mealPlan ? $this->nutritionService->getWeeklyNutrition($mealPlan) : [
@@ -53,6 +53,18 @@ class MealPlanWebController extends Controller
         $templates = MealPlanTemplate::with('items.recipe', 'chef')->get();
 
         return view('meal-plan.index', compact('mealPlan', 'days', 'mealTypes', 'nutritionSummary', 'streak', 'templates'));
+    }
+
+    /**
+     * Display all available meal plan templates for users.
+     */
+    public function templates()
+    {
+        $templates = MealPlanTemplate::with('items', 'chef')
+            ->latest()
+            ->paginate(12);
+
+        return view('meal-plan.templates', compact('templates'));
     }
 
     /**

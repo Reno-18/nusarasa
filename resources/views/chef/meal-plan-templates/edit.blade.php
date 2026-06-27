@@ -47,7 +47,7 @@
 
                     @php
                         $dayNames = ['monday' => 'Senin', 'tuesday' => 'Selasa', 'wednesday' => 'Rabu', 'thursday' => 'Kamis', 'friday' => 'Jumat', 'saturday' => 'Sabtu', 'sunday' => 'Minggu'];
-                        $mealTimeNames = ['breakfast' => 'Sarapan 🍳', 'lunch' => 'Siang 🍱', 'dinner' => 'Malam 🍲', 'camilan' => 'Camilan 🍪'];
+                        $mealTimeNames = ['breakfast' => 'Sarapan 🍳', 'lunch' => 'Siang 🍱', 'dinner' => 'Malam 🍲', 'snacks' => 'Cemilan 🍿'];
                     @endphp
 
                     <div class="overflow-x-auto pb-4">

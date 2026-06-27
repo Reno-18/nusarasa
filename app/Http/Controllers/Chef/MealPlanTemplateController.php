@@ -86,7 +86,7 @@ class MealPlanTemplateController extends Controller
             }
         }
 
-        return redirect()->route('meal-plan-templates.index')
+        return redirect()->route('chef.meal-plan-templates.index')
             ->with('success', 'Templat rencana makan berhasil dibuat!');
     }
 
@@ -159,7 +159,7 @@ class MealPlanTemplateController extends Controller
             }
         }
 
-        return redirect()->route('meal-plan-templates.index')
+        return redirect()->route('chef.meal-plan-templates.index')
             ->with('success', 'Templat rencana makan berhasil diperbarui!');
     }
 
@@ -171,7 +171,7 @@ class MealPlanTemplateController extends Controller
         $template = MealPlanTemplate::where('chef_id', auth()->id())->findOrFail($id);
         $template->delete();
 
-        return redirect()->route('meal-plan-templates.index')
+        return redirect()->route('chef.meal-plan-templates.index')
             ->with('success', 'Templat rencana makan berhasil dihapus!');
     }
 }

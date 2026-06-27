@@ -168,10 +168,8 @@ class MealPlanTemplateController extends Controller
         $mealPlan->items()->delete();
         
         foreach ($template->items as $item) {
-            $mealType = $item->meal_time;
-            if ($mealType === 'camilan') {
-                continue; // Skip camilan due to column type enum constraints in meal_plan_items
-            }
+            // Normalize old 'camilan' key to 'snacks' for backward compatibility
+            $mealType = $item->meal_time === 'camilan' ? 'snacks' : $item->meal_time;
             
             $apiTitle = null;
             $apiImage = null;

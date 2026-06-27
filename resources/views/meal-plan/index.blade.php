@@ -234,8 +234,8 @@
                     <div class="p-5 flex-1 flex flex-col gap-5 bg-nusarasa-cream/10">
                         @foreach($mealTypes as $mealType)
                             @php
-                                $typeNames = ['breakfast' => 'Sarapan', 'lunch' => 'Makan Siang', 'dinner' => 'Makan Malam'];
-                                $typeEmojis = ['breakfast' => '🍳', 'lunch' => '🍱', 'dinner' => '🍲'];
+                                $typeNames = ['breakfast' => 'Sarapan', 'lunch' => 'Makan Siang', 'dinner' => 'Makan Malam', 'snacks' => 'Cemilan'];
+                                $typeEmojis = ['breakfast' => '🍳', 'lunch' => '🍱', 'dinner' => '🍲', 'snacks' => '🍿'];
                                 $item = $mealPlan?->items->where('day_of_week', $day)->where('meal_type', $mealType)->first();
                             @endphp
 
@@ -291,31 +291,92 @@
             @endforeach
         </div>
 
-        <!-- Templates Browser -->
+        <!-- Templates Dashboard Widget -->
         @if($templates->isNotEmpty())
             <div class="mt-16" data-aos="fade-up">
-                <h2 class="text-3xl font-black font-display uppercase tracking-tight text-nusarasa-dark mb-6 flex items-center gap-3">
-                    <span class="text-3xl">📋</span> Templat Mingguan
-                    <span class="text-sm font-bold opacity-40 normal-case tracking-normal">dari para Chef</span>
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @foreach($templates->take(6) as $template)
-                        <div class="bg-white border-2 border-nusarasa-dark rounded-3xl overflow-hidden shadow-[6px_6px_0px_0px_rgba(26,26,26,1)] hover:-translate-y-1 transition-transform flex flex-col">
-                            <div class="p-5 border-b-2 border-nusarasa-dark bg-nusarasa-purple flex-shrink-0">
-                                <h3 class="text-lg font-black text-white tracking-tight line-clamp-1">{{ $template->name }}</h3>
-                                @if($template->goal)
-                                    <span class="text-[10px] font-black uppercase text-white/70">{{ $template->goal }}</span>
-                                @endif
+                <div class="bg-nusarasa-cream/40 border-4 border-nusarasa-dark rounded-[3rem] p-8 md:p-10 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+                    
+                    <!-- Widget Header -->
+                    <div class="flex items-center justify-between mb-8 flex-wrap gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white border-4 border-nusarasa-dark rounded-2xl flex items-center justify-center text-2xl shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] rotate-[-3deg]">
+                                📋
                             </div>
-                            <div class="p-5 flex flex-col flex-grow justify-between">
-                                <p class="text-xs font-bold text-nusarasa-dark/60 line-clamp-2 mb-4">{{ $template->description ?? 'Templat mingguan oleh Chef ' . ($template->chef->name ?? '') }}</p>
-                                <button class="apply-template-btn w-full py-2.5 bg-nusarasa-yellow text-nusarasa-dark border border-nusarasa-dark rounded-xl font-black text-xs uppercase tracking-widest shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-0.5 hover:shadow-none transition-all"
-                                        data-template-id="{{ $template->id }}">
-                                    Terapkan ke Minggu Ini
-                                </button>
+                            <div>
+                                <h2 class="text-3xl font-black font-display uppercase tracking-tighter text-nusarasa-dark leading-none">Templates Mingguan</h2>
+                                <p class="text-xs font-bold text-nusarasa-dark/60 uppercase tracking-widest mt-1">Siap pakai dari para Chef</p>
                             </div>
                         </div>
-                    @endforeach
+                        <a href="{{ route('meal-plan.templates') }}"
+                           class="inline-flex items-center gap-2 px-6 py-3 bg-nusarasa-purple text-nusarasa-dark border-2 border-nusarasa-dark rounded-pill font-black text-xs uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+                            Lihat Semua →
+                        </a>
+                    </div>
+
+                    @php
+                        $badgeColors = [
+                            'bg-nusarasa-pink', 
+                            'bg-nusarasa-yellow', 
+                            'bg-emerald-300', 
+                            'bg-orange-300', 
+                            'bg-blue-300'
+                        ];
+                    @endphp
+
+                    <!-- Horizontal Scroll Area -->
+                    <div class="flex overflow-x-auto gap-6 pb-6 pt-2 snap-x snap-mandatory hide-scrollbar">
+                        @foreach($templates->take(8) as $index => $template)
+                            @php
+                                $badgeColor = $badgeColors[$index % count($badgeColors)];
+                            @endphp
+
+                            <div class="min-w-[280px] w-[280px] snap-center bg-white border-2 border-nusarasa-dark rounded-3xl overflow-hidden shadow-[6px_6px_0px_0px_rgba(26,26,26,1)] hover:shadow-[3px_3px_0px_0px_rgba(26,26,26,1)] hover:translate-x-[3px] hover:translate-y-[3px] transition-all flex flex-col flex-shrink-0 relative group">
+                                
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <!-- Badges -->
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        @if($template->goal)
+                                            <span class="px-2.5 py-1 {{ $badgeColor }} border-2 border-nusarasa-dark rounded-pill font-black text-[9px] uppercase tracking-widest text-nusarasa-dark">
+                                                🎯 {{ $template->goal }}
+                                            </span>
+                                        @endif
+                                        <span class="px-2.5 py-1 bg-nusarasa-dark text-white border-2 border-nusarasa-dark rounded-pill font-black text-[9px] uppercase tracking-widest">
+                                            {{ $template->items->count() }} Menu
+                                        </span>
+                                    </div>
+
+                                    <!-- Title & Description -->
+                                    <h3 class="text-xl font-black text-nusarasa-dark tracking-tight leading-tight line-clamp-2 mb-2 group-hover:text-nusarasa-purple transition-colors">{{ $template->name }}</h3>
+                                    
+                                    @if($template->description)
+                                        <p class="text-xs font-bold text-nusarasa-dark/60 line-clamp-2 mb-5 leading-relaxed">{{ $template->description }}</p>
+                                    @else
+                                        <p class="text-xs font-bold text-nusarasa-dark/40 italic mb-5">Rencana makan mingguan siap pakai.</p>
+                                    @endif
+
+                                    <!-- Chef Info -->
+                                    <div class="mt-auto">
+                                        @if($template->chef)
+                                            <div class="flex items-center gap-3 mb-5 border-t-2 border-dashed border-nusarasa-dark/10 pt-4">
+                                                <div class="w-8 h-8 bg-nusarasa-cream text-nusarasa-dark border-2 border-nusarasa-dark rounded-full flex items-center justify-center font-black text-xs shadow-[2px_2px_0px_0px_rgba(26,26,26,1)] flex-shrink-0">
+                                                    {{ strtoupper(substr($template->chef->name, 0, 1)) }}
+                                                </div>
+                                                <div class="overflow-hidden">
+                                                    <p class="text-[8px] font-black uppercase tracking-widest text-nusarasa-dark/50">Dibuat oleh</p>
+                                                    <p class="text-xs font-black text-nusarasa-dark uppercase tracking-wider truncate">{{ $template->chef->name }}</p>
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                        <button class="apply-template-btn w-full py-3 bg-nusarasa-yellow text-nusarasa-dark border-2 border-nusarasa-dark rounded-xl font-black text-[11px] uppercase tracking-widest shadow-[3px_3px_0px_0px_rgba(26,26,26,1)] hover:bg-nusarasa-dark hover:text-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex justify-center items-center gap-2"
+                                                data-template-id="{{ $template->id }}">
+                                            <span>🚀</span> Terapkan
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         @endif

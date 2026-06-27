@@ -5,10 +5,16 @@
                 <h1 class="text-6xl md:text-8xl font-black font-display uppercase tracking-tighter leading-none text-nusarasa-dark">Dapur<br><span class="text-[#6D28D9]">Kreatif</span></h1>
                 <p class="font-bold opacity-60 text-sm uppercase tracking-widest mt-4 ml-2">Kelola resep dan pantau performa kulinermu</p>
             </div>
-            <a href="{{ route('chef.recipes.create') }}" 
-               class="px-12 py-6 bg-nusarasa-dark text-white rounded-pill font-black text-xs uppercase tracking-widest hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                + Tambah Resep Baru
-            </a>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="{{ route('chef.meal-plan-templates.index') }}" 
+                   class="px-8 py-5 bg-nusarasa-purple text-nusarasa-dark border-2 border-nusarasa-dark rounded-pill font-black text-xs uppercase tracking-widest hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-center flex items-center justify-center gap-2">
+                    <span class="text-xl">📋</span> Kelola Template
+                </a>
+                <a href="{{ route('chef.recipes.create') }}" 
+                   class="px-8 py-5 bg-nusarasa-dark text-white border-2 border-nusarasa-dark rounded-pill font-black text-xs uppercase tracking-widest hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-center flex items-center justify-center gap-2">
+                    <span class="text-xl">+</span> Tambah Resep
+                </a>
+            </div>
         </div>
 
         <!-- Stats -->
